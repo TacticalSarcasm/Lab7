@@ -87,13 +87,15 @@ void QueueLinked<T>::enqueue(T* item)
 
     //DO THIS (enqueueing the first item is a special case)
 
+   if (sz == max_queue)
+   {
+      arrayResize(2*max_queue);
+   }
 
-
-
-
-
-
-
+   back = back + 1;
+   if (back == max_queue) back = 0;
+   items[back] = item;
+   sz++;
 
     sze++;
 }
@@ -106,17 +108,16 @@ T* QueueLinked<T>::dequeue()
     //DO THIS (dequeueing the last item is a special case)
     //also, check that there are items before dequeueing
 
+   T* item = NULL;
 
-
-
-
-
-
-
-
-
-
-
+   if (!isEmpty()) 
+   {
+      item = items[front];
+      items[front] = NULL;
+      front = front + 1;
+      if (front == max_queue) front = 0;
+      sz--;
+   }
 
     return item;
 }
