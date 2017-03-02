@@ -87,39 +87,32 @@ void QueueLinked<T>::enqueue(T* item)
 
     //DO THIS (enqueueing the first item is a special case)
 
-   if (sz == max_queue)
+   if (sze == 0)
    {
-      arrayResize(2*max_queue);
+	   back = node;
    }
-
-   back = back + 1;
-   if (back == max_queue) back = 0;
-   items[back] = item;
-   sz++;
-
     sze++;
 }
 
 template < class T >
 T* QueueLinked<T>::dequeue()
 {
-    T* item = NULL;
+    //T* item = NULL;
 
     //DO THIS (dequeueing the last item is a special case)
     //also, check that there are items before dequeueing
 
-   T* item = NULL;
+   if (sze == 0) return;
 
-   if (!isEmpty()) 
-   {
-      item = items[front];
-      items[front] = NULL;
-      front = front + 1;
-      if (front == max_queue) front = 0;
-      sz--;
-   }
+   NextNode<T>* prev = NULL;
+   NextNode<T>* curr = back->getNext();  //the head
+   //back->setNext(NULL);  //break the bridge link
 
-    return item;
+   prev = curr;
+   curr = curr->getNext();
+   delete prev;
+
+   return item;
 }
 
 #endif

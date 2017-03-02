@@ -51,8 +51,7 @@ double RombergIntegration::accurateRomberg(MultiVarFunction* f, double a, double
       //DO THIS
       //use the algorithm described in the lab to improve the accuracy of your level 0 results
 
-
-
+	
 
 
 
