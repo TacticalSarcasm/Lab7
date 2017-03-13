@@ -91,28 +91,45 @@ void QueueLinked<T>::enqueue(T* item)
    {
 	   back = node;
    }
+   
+   else
+   {
+	   node->setNext(back->getNext());
+	   back->setNext(node);
+	   back = node;
+   }
     sze++;
 }
 
 template < class T >
 T* QueueLinked<T>::dequeue()
 {
-    //T* item = NULL;
+    T* item = NULL;
 
     //DO THIS (dequeueing the last item is a special case)
-    //also, check that there are items before dequeueing
+	
+	if (!isEmpty()) 
+     {
+          NextNode<T>* head = back->getNext();
+          item = head->getItem(); //also, check that there are items before dequeueing
 
-   if (sze == 0) return;
+          if (head == back) 
+          {  
+			back->setNext(NULL); 
+			back = NULL;        
+          }
+		  
+          else 
+          {
+			back->setNext(head->getNext());
+          }  
 
-   NextNode<T>* prev = NULL;
-   NextNode<T>* curr = back->getNext();  //the head
-   //back->setNext(NULL);  //break the bridge link
+          delete head;
+          sze--;
+     }
+     
+     return item;
 
-   prev = curr;
-   curr = curr->getNext();
-   delete prev;
-
-   return item;
 }
 
 #endif
