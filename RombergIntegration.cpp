@@ -74,7 +74,7 @@ double RombergIntegration::accurateRomberg(MultiVarFunction* f, double a, double
 	}
 		
       iterations--;
-	}
+   }
 
    //obtain the final answer
    db = q1->dequeue();
