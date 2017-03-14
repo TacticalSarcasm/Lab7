@@ -51,16 +51,16 @@ double RombergIntegration::accurateRomberg(MultiVarFunction* f, double a, double
       //DO THIS
       //use the algorithm described in the lab to improve the accuracy of your level 0 results
 
+double k = 1;
+	Double iLast = q1->deque();
+	Double iMid = q1->peek();
+	double Imid = iLast->getValue();
+	double Ilast = iMid->getValue();
 	
-
-
-
-
-
-
-
-
-
+	factor = ((4^k * Imid) - Ilast) / (4^k - 1);
+	//q2
+	
+	
 
 
 
