@@ -22,15 +22,16 @@ double RombergIntegration::accurateRomberg(MultiVarFunction* f, double a, double
       //DO THIS
       //obtain the required number of trapezoid evaluations depending on the number of levels requested
       //put all of the level 0 results on the q1
+	   
+	   
+	//returns number of iterations
+	double result = RecursiveIntegration::romberg(f, a, b, n);
 	  
-	  //returns number of iterations
-	  double result = RecursiveIntegration::romberg(f, a, b, n);
+	//sets results = db
+	db = new Double(result);
 	  
-	  //sets results = db
-	  db = new Double(result);
-	  
-	  //sticks db(results) in q1
-	  q1->enqueue(db);
+	//sticks db(results) in q1
+	q1->enqueue(db);
 
       n = 2*n;  //double the number of intervals
       counter++;
@@ -50,26 +51,30 @@ double RombergIntegration::accurateRomberg(MultiVarFunction* f, double a, double
    {
       //DO THIS
       //use the algorithm described in the lab to improve the accuracy of your level 0 results
+	  
+	db = q1->dequeue();
+	double I1 = db->getValue(); // DEQUEUE A VALUE (I1)
+	delete db;
+	double Im = q1->peek()->getValue(); // PEEK AT AN ITEM ()
+	double result = ( ((pow(4, power) * Im) - I1) / (pow(4, power) - 1)); // USE THE EQUATION GIVEN
+	db = new Double(result);
+	q2->enqueue(db);
+          
+	if(q1->size() == 1)
+        {
+		db = q1->dequeue();
+		delete db;
 
-double k = 1;
-	Double iLast = q1->deque();
-	Double iMid = q1->peek();
-	double Imid = iLast->getValue();
-	double Ilast = iMid->getValue();
-	
-	factor = ((4^k * Imid) - Ilast) / (4^k - 1);
-	//q2
-	
-	
+		QueueLinked<Double>* q;
 
-
-
-
-
-
-
+		q = q1;
+		q1 = q2;
+		q2 = q;
+		power++;
+	}
+		
       iterations--;
-   }
+	}
 
    //obtain the final answer
    db = q1->dequeue();
